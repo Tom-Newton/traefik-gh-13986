@@ -51,3 +51,19 @@ The client should raise an exception mentioning "deliberate failure on the serve
     ```
 The client will get one response and then hang. If you left the `ports.web.transport.respondingTimeouts.readTimeout`
 enabled then the error will propagate when that timeout expires.
+
+
+## Testing an older version of traefik
+1. Uninstall the traefik version we installed before
+    ```
+    helm uninstall traefik
+    ```
+2. Install a version that works
+    ```
+    helm install traefik traefik/traefik --namespace traefik --set image.tag=3.7.6 --set ports.web.transport.respondingTimeouts.readTimeout=0
+    ```
+3. Run the client against the server running in `k3d`
+    ```
+    K3D=true python3 client.py
+    ```
+Now the error is propagated straight away
