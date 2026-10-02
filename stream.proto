@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package reproduce;
+
+service TerminatingStream {
+  rpc Stream(stream StreamMessage) returns (stream StreamMessage);
+}
+
+message StreamMessage {
+  bytes data = 1;
+}
