@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: ${IMAGE}
+          image: test-grpc:local
           ports:
             - containerPort: 50051
 ---
@@ -44,16 +44,10 @@ kind: Ingress
 metadata:
   name: test-grpc-ingress
   namespace: default
-  annotations:
-    cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
 spec:
-  ingressClassName: ${INGRESS_CLASS_NAME}
-  tls:
-    - hosts:
-        - ${HOST}
-      secretName: test-grpc-tls-secret
+  ingressClassName: traefik
   rules:
-    - host: ${HOST}
+    - host: localhost
       http:
         paths:
           - path: /
